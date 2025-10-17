@@ -12,8 +12,8 @@ import {
   RevokedTokensRepository,
   UserRepository,
 } from 'src/database/repositories';
-import { OtpService } from 'src/common/utils';
-import { Events } from 'src/common/mail/utils';
+import { OtpService } from '../common/utils';
+import { Events } from '../common/mail/utils';
 import { verifyHash } from 'src/common/security/hash.security';
 import { TokenService } from 'src/common/services';
 import { ConfirmEmailDto, LogoutDto, SigninDto } from './dto';

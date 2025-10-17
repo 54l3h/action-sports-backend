@@ -9,8 +9,8 @@ import {
 import { OtpModel, RevokedTokenModel, UserModel } from 'src/database/models';
 import { TokenService } from 'src/common/services';
 import { JwtService } from '@nestjs/jwt';
-import { OtpService } from 'src/common/utils';
-import { MailModule } from 'src/common/mail/mail.module';
+import { OtpService } from '../common/utils';
+import { MailModule } from '../common/mail/mail.module';
 
 @Module({
   imports: [UserModel, OtpModel, RevokedTokenModel, MailModule],
