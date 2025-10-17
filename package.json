@@ -9,8 +9,8 @@
     "build": "nest build",
     "vercel-build": "pnpm build",
     "start:dev": "nest start --watch",
-    "start": "node -r module-alias/register dist/main.server.js",
-    "start:prod": "node -r module-alias/register dist/main.server.js"
+    "start": "node dist/main.js",
+    "start:prod": "node dist/main.server.js"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^2.0.2",

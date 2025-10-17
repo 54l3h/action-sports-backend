@@ -7,31 +7,23 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { GlobalExceptionFilter } from './common/filters/http-exception.filter';
-import { ExpressAdapter } from '@nestjs/platform-express';
-import express from 'express';
-import serverless from 'serverless-http';
 
-const expressApp = express();
-let handler: any;
+let cachedApp: any;
 
 async function bootstrap() {
-  expressApp.use(express.json({ limit: '50mb' }));
-  expressApp.use(express.urlencoded({ extended: true, limit: '50mb' }));
+  if (cachedApp) {
+    return cachedApp;
+  }
 
-  const app = await NestFactory.create(
-    AppModule,
-    new ExpressAdapter(expressApp),
-    {
-      bodyParser: false,
-      rawBody: true,
-    },
-  );
+  const app = await NestFactory.create(AppModule, {
+    bodyParser: true,
+    rawBody: false,
+  });
 
   const config = new DocumentBuilder()
     .setTitle('Action Sports API')
     .setDescription('The Action Sports API description')
     .setVersion('1.0')
-    .addBearerAuth()
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
@@ -39,33 +31,28 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
   app.useGlobalPipes(
-    new ValidationPipe({ 
-      whitelist: true, 
+    new ValidationPipe({
+      whitelist: true,
       forbidNonWhitelisted: true,
       transform: true,
     }),
   );
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalFilters(new GlobalExceptionFilter());
-  app.enableCors();
+  app.enableCors({
+    origin: true,
+    credentials: true,
+  });
 
   await app.init();
-  
-  handler = serverless(expressApp, {
-    binary: ['image/*', 'application/octet-stream'],
-  });
+
+  cachedApp = app;
+  return app;
 }
 
-bootstrap().catch((err) => {
-  console.error('Nest serverless bootstrap failed:', err);
-});
-
-export default async function handlerWrapper(req: any, res: any) {
-  if (!handler) {
-    await new Promise<void>((resolve) => {
-      const check = () => (handler ? resolve() : setTimeout(check, 50));
-      check();
-    });
-  }
-  return handler(req, res);
+// Export handler for Vercel
+export default async function handler(req: any, res: any) {
+  const app = await bootstrap();
+  const expressApp = app.getHttpAdapter().getInstance();
+  return expressApp(req, res);
 }

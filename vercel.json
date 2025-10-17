@@ -1,5 +1,21 @@
 {
   "version": 2,
-  "builds": [{ "src": "src/main.server.ts", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "src/main.server.ts" }]
+  "builds": [
+    {
+      "src": "dist/main.server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/main.server.js"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm run build",
+  "outputDirectory": "dist"
 }
