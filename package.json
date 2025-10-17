@@ -8,11 +8,9 @@
   "scripts": {
     "build": "nest build",
     "vercel-build": "pnpm build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
-    "start": "node dist/main.js",
-    "start:prod": "node dist/main.js"
+    "start": "node -r module-alias/register dist/main.server.js",
+    "start:prod": "node -r module-alias/register dist/main.server.js"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^2.0.2",
@@ -31,6 +29,7 @@
     "crypto-js": "^4.2.0",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "module-alias": "^2.2.3",
     "mongoose": "^8.18.0",
     "multer": "^2.0.2",
     "nodemailer": "^7.0.5",
@@ -67,21 +66,7 @@
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+  "_moduleAliases": {
+    "src": "dist"
   }
 }
