@@ -109,9 +109,8 @@ export class AuthService {
     // find the otp document which is associated to the user (done)
     // When comparing the otp which is provided from the user the system should compare the latest otp which have been sent with the provided otp (done)
     // {createdAt:-1} & userId() & otp type is confirmation (done)
-    const otpDocument = await this.otpRepository.findConfirmationOtpByUserId(
-      new Types.ObjectId(userId),
-    );
+    const otpDocument =
+      await this.otpRepository.findConfirmationOtpByUserId(userId);
 
     if (!otpDocument) {
       throw new BadRequestException('OTP does not exist or has expired');

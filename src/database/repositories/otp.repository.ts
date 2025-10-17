@@ -29,13 +29,13 @@ export class OtpRepository extends BaseRepository<OtpType> {
     });
   }
 
-  async findConfirmationOtpByUserId(userId: Types.ObjectId) {
+  async findConfirmationOtpByUserId(userId) {
     return this.otpModel
       .findOne({ userId, otpType: OtpEnum.CONFIRMATION })
       .sort({ createdAt: -1 });
   }
 
-  async findByIdAndDelete(documentId: Types.ObjectId) {
+  async findByIdAndDelete(documentId) {
     return this.otpModel.findByIdAndDelete(documentId);
   }
 }

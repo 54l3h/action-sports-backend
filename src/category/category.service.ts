@@ -27,7 +27,7 @@ export class CategoryService {
 
     const category = {
       name: dto.categoryName,
-      createdBy: new Types.ObjectId(userId),
+      createdBy: userId,
     };
 
     if (image) {
@@ -79,7 +79,7 @@ export class CategoryService {
       category.slug = slugify(category.name, '-');
     }
 
-    category.updatedBy = new Types.ObjectId(userId);
+    category.updatedBy = userId;
     await category.save();
     return category;
   }
@@ -87,7 +87,7 @@ export class CategoryService {
   async getCategoryById(categoryId: string) {
     return await this.categoryRepository.findOne({
       filters: {
-        _id: new Types.ObjectId(categoryId),
+        _id: categoryId,
       },
     });
   }

@@ -18,13 +18,13 @@ export class UserRepository extends BaseRepository<UserType> {
 
   async updateEmailConfirmed(userId: string) {
     return await this.userModel.findOneAndUpdate(
-      { _id: new Types.ObjectId(userId) },
+      { _id: userId },
       { verifiedAt: new Date() },
       { new: true },
     );
   }
 
   async findById(id: string) {
-    return this.userModel.findById(new Types.ObjectId(id));
+    return this.userModel.findById(id);
   }
 }
