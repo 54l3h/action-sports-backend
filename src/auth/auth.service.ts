@@ -130,7 +130,7 @@ export class AuthService {
     return { message: 'Email confirmed successfully' };
   }
 
-  async getProfile(userId) {
+  async getProfile(userId: string) {
     return await this.userRepository.findById(userId);
   }
 
