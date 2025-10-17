@@ -48,7 +48,8 @@ export abstract class BaseRepository<TDocument> {
   }
 
   async save(document: TDocument) {
-    return this.save(document);
+    // Fixed: This was calling itself recursively!
+    return (document as any).save();
   }
 
   async deleteOne(filters: FilterQuery<TDocument>) {
@@ -67,8 +68,9 @@ export abstract class BaseRepository<TDocument> {
     update: UpdateQuery<TDocument>,
   ) {
     if (filters._id) {
-      return await this.model.findByIdAndUpdate(filters._id, update);
+      return await this.model.findByIdAndUpdate(filters._id, update, { new: true });
     }
-    return await this.model.findOneAndDelete(filters, update);
+    // Fixed: This was calling findOneAndDelete instead of findOneAndUpdate!
+    return await this.model.findOneAndUpdate(filters, update, { new: true });
   }
 }
