@@ -7,7 +7,10 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { GlobalExceptionFilter } from './common/filters/http-exception.filter';
+import { ExpressAdapter } from '@nestjs/platform-express';
+import express from 'express';
 
+const server = express();
 let cachedApp: any;
 
 async function bootstrap() {
@@ -15,10 +18,7 @@ async function bootstrap() {
     return cachedApp;
   }
 
-  const app = await NestFactory.create(AppModule, {
-    bodyParser: true,
-    rawBody: false,
-  });
+  const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
 
   const config = new DocumentBuilder()
     .setTitle('Action Sports API')
@@ -39,20 +39,15 @@ async function bootstrap() {
   );
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalFilters(new GlobalExceptionFilter());
-  app.enableCors({
-    origin: true,
-    credentials: true,
-  });
+  app.enableCors();
 
   await app.init();
 
   cachedApp = app;
-  return app;
+  return server;
 }
 
-// Export handler for Vercel
 export default async function handler(req: any, res: any) {
-  const app = await bootstrap();
-  const expressApp = app.getHttpAdapter().getInstance();
-  return expressApp(req, res);
+  const server = await bootstrap();
+  return server(req, res);
 }
