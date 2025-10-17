@@ -10,8 +10,8 @@ import {
 import { AuthService } from './auth.service';
 import { SignupDto, SigninDto, ConfirmEmailDto, LogoutDto } from './dto';
 import type { Request } from 'express';
-import { Auth } from 'src/common/decorators';
-import { SessionInfo } from 'src/database/models';
+import { Auth } from '../common/decorators';
+import { SessionInfo } from '../database/models';
 
 @Controller('auth')
 export class AuthController {

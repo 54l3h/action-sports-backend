@@ -11,15 +11,15 @@ import {
   OtpRepository,
   RevokedTokensRepository,
   UserRepository,
-} from 'src/database/repositories';
+} from '../database/repositories';
 import { OtpService } from '../common/utils';
 import { Events } from '../common/mail/utils';
-import { verifyHash } from 'src/common/security/hash.security';
-import { TokenService } from 'src/common/services';
+import { verifyHash } from '../common/security/hash.security';
+import { TokenService } from '../common/services';
 import { ConfirmEmailDto, LogoutDto, SigninDto } from './dto';
-import { ITokenPayload, OtpEnum, RolesEnum } from 'src/common/types';
+import { ITokenPayload, OtpEnum, RolesEnum } from '../common/types';
 import { Types } from 'mongoose';
-import { SessionInfo } from 'src/database/models';
+import { SessionInfo } from '../database/models';
 
 @Injectable()
 export class AuthService {

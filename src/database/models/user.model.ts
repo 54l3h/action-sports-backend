@@ -2,7 +2,7 @@ import { MongooseModule, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { encrypt } from '../../common/security/encryption.security';
 import { hash } from '../../common/security/hash.security';
-import { GenderEnum, RolesEnum } from 'src/common/types';
+import { GenderEnum, RolesEnum } from '../../common/types';
 
 // create class schema
 @Schema({ timestamps: true })

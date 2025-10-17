@@ -8,7 +8,7 @@ import { TokenService } from '../services';
 import {
   RevokedTokensRepository,
   UserRepository,
-} from 'src/database/repositories';
+} from '../../database/repositories';
 import { Types } from 'mongoose';
 
 @Injectable()

@@ -14,11 +14,11 @@ import {
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
-import { Auth } from 'src/common/decorators';
-import { RolesEnum } from 'src/common/types';
+import { Auth } from '../common/decorators';
+import { RolesEnum } from '../common/types';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UploadFileOptions } from 'src/common/utils';
-import { ImageAllowedExtensions } from 'src/common/constants';
+import { UploadFileOptions } from '../common/utils';
+import { ImageAllowedExtensions } from '../common/constants';
 
 @Controller('category')
 export class CategoryController {

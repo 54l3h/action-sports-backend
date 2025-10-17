@@ -8,7 +8,7 @@ import {
   IsStrongPassword,
   MinLength,
 } from 'class-validator';
-import { GenderEnum, RolesEnum } from 'src/common/types';
+import { GenderEnum, RolesEnum } from '../../common/types';
 
 export class SignupDto {
   @ApiProperty()

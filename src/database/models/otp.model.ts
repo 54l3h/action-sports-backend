@@ -1,6 +1,6 @@
 import { MongooseModule, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, HydratedDocument, Types } from 'mongoose';
-import { OtpEnum } from 'src/common/types';
+import { OtpEnum } from '../../common/types';
 import { User } from './user.model';
 
 // Class schema

@@ -3,8 +3,8 @@ import { BaseRepository } from '../base.repository';
 import { InjectModel } from '@nestjs/mongoose';
 import { Otp, OtpType } from '../models';
 import { Model, Types } from 'mongoose';
-import { OtpEnum } from 'src/common/types';
-import { hash } from 'src/common/security/hash.security';
+import { OtpEnum } from '../../common/types';
+import { hash } from '../../common/security/hash.security';
 
 interface ICreateOptions {
   userId: Types.ObjectId;

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductController } from './product.controller';
-import { ProductRepository } from 'src/database/repositories';
-import { ProductModel } from 'src/database/models';
+import { ProductRepository } from '../database/repositories';
+import { ProductModel } from '../database/models';
 
 @Module({
   controllers: [ProductController],

@@ -7,11 +7,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
-import { Auth } from 'src/common/decorators';
-import { RolesEnum } from 'src/common/types';
+import { Auth } from '../common/decorators';
+import { RolesEnum } from '../common/types';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { UploadFileOptions } from 'src/common/utils';
-import { ImageAllowedExtensions } from 'src/common/constants';
+import { UploadFileOptions } from '../common/utils';
+import { ImageAllowedExtensions } from '../common/constants';
 import type { Request } from 'express';
 
 @Controller('product')

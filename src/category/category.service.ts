@@ -4,10 +4,9 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Types } from 'mongoose';
 import slugify from 'slugify';
-import { UploadService } from 'src/common/services/upload.service';
-import { CategoryRepository } from 'src/database/repositories';
+import { UploadService } from '../common/services/upload.service';
+import { CategoryRepository } from '../database/repositories';
 
 @Injectable()
 export class CategoryService {

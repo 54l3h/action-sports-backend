@@ -5,9 +5,9 @@ import {
   OtpRepository,
   RevokedTokensRepository,
   UserRepository,
-} from 'src/database/repositories';
-import { OtpModel, RevokedTokenModel, UserModel } from 'src/database/models';
-import { TokenService } from 'src/common/services';
+} from '../database/repositories';
+import { OtpModel, RevokedTokenModel, UserModel } from '../database/models';
+import { TokenService } from '../common/services';
 import { JwtService } from '@nestjs/jwt';
 import { OtpService } from '../common/utils';
 import { MailModule } from '../common/mail/mail.module';
