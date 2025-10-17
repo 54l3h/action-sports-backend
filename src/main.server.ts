@@ -15,18 +15,23 @@ const expressApp = express();
 let handler: any;
 
 async function bootstrap() {
+  expressApp.use(express.json({ limit: '50mb' }));
+  expressApp.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
   const app = await NestFactory.create(
     AppModule,
     new ExpressAdapter(expressApp),
+    {
+      bodyParser: false,
+      rawBody: true,
+    },
   );
-
-  expressApp.use(express.json());
-  expressApp.use(express.urlencoded({ extended: true }));
 
   const config = new DocumentBuilder()
     .setTitle('Action Sports API')
     .setDescription('The Action Sports API description')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
@@ -34,14 +39,21 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
   app.useGlobalPipes(
-    new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
+    new ValidationPipe({ 
+      whitelist: true, 
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
   );
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.enableCors();
 
   await app.init();
-  handler = serverless(expressApp);
+  
+  handler = serverless(expressApp, {
+    binary: ['image/*', 'application/octet-stream'],
+  });
 }
 
 bootstrap().catch((err) => {
