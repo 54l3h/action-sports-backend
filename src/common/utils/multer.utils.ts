@@ -14,7 +14,10 @@ export const UploadFileOptions = ({
   maxFileSize,
 }: MulterOptions) => {
   const storage = diskStorage({
-    destination: `uploads/${path}`,
+    destination(req, file, callback) {
+      const destinationPath = `/tmp/uploads/${path}`;
+      callback(null, destinationPath);
+    },
     filename(req, file, callback) {
       const filename = `${Date.now()}-${file.originalname}`;
       callback(null, filename);
