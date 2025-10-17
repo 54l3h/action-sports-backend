@@ -20,7 +20,9 @@ async function bootstrap() {
     new ExpressAdapter(expressApp),
   );
 
-  // Swagger configuration
+  expressApp.use(express.json());
+  expressApp.use(express.urlencoded({ extended: true }));
+
   const config = new DocumentBuilder()
     .setTitle('Action Sports API')
     .setDescription('The Action Sports API description')
@@ -30,7 +32,6 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, documentFactory);
 
-  // Global settings
   app.setGlobalPrefix('api');
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
@@ -47,7 +48,6 @@ bootstrap().catch((err) => {
   console.error('Nest serverless bootstrap failed:', err);
 });
 
-// Export a handler for Vercel
 export default async function handlerWrapper(req: any, res: any) {
   if (!handler) {
     await new Promise<void>((resolve) => {
