@@ -23,10 +23,12 @@ interface IFoundManyOptions<TDocument> {
 export abstract class BaseRepository<TDocument> {
   constructor(private readonly model: Model<TDocument>) {}
 
+  // FIX FOR TS2554: Takes 'document' argument
   async create(document: Partial<TDocument>): Promise<TDocument> {
     return await this.model.create(document);
   }
 
+  // FIX FOR TS2554: Takes 'IFoundOneOptions' argument
   async findOne({
     filters,
     select = '',
@@ -48,7 +50,6 @@ export abstract class BaseRepository<TDocument> {
   }
 
   async save(document: TDocument) {
-    // Fixed: This was calling itself recursively!
     return (document as any).save();
   }
 
@@ -68,9 +69,11 @@ export abstract class BaseRepository<TDocument> {
     update: UpdateQuery<TDocument>,
   ) {
     if (filters._id) {
-      return await this.model.findByIdAndUpdate(filters._id, update, { new: true });
+      return await this.model.findByIdAndUpdate(filters._id, update, {
+        new: true,
+      });
     }
-    // Fixed: This was calling findOneAndDelete instead of findOneAndUpdate!
+
     return await this.model.findOneAndUpdate(filters, update, { new: true });
   }
 }

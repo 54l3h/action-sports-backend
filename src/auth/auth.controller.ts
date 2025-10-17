@@ -44,7 +44,7 @@ export class AuthController {
 
   @Post('logout')
   @Auth()
-  logout(@Req() req: Request, dto: LogoutDto) {
+  logout(@Req() req: Request) {
     const { jti: tokenId, id: userId, exp } = req['user'];
     const sessionInfo: SessionInfo = {
       tokenId,
