@@ -12,8 +12,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('clickstore API')
-    .setDescription('The clickstore API description')
+    .setTitle('Action Sports API')
+    .setDescription('The Action Sports API description')
     .setVersion('1.0')
     .build();
 
