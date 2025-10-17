@@ -42,10 +42,10 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       console.error('Unhandled exception', exception);
     }
 
-    response.status(status).json({
+    (response as any).status(status).json({
       success: false,
       statusCode: status,
-      path: request.url,
+      path: (request as any).url,
       message,
     });
   }
